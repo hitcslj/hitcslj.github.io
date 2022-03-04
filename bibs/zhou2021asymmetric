@@ -1,0 +1,6 @@
+@inproceedings{zhou2021asymmetric,
+  title={Asymmetric Loss Functions for Learning with Noisy Labels},
+  author={Zhou, Xiong and Liu, Xianming and Jiang, Junjun and Gao, Xin and Ji, Xiangyang},
+  booktitle={ICML},
+  year={2021}
+}

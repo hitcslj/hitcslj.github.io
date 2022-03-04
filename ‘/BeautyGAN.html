@@ -1,0 +1,181 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="BeautyGAN" />
+    <meta name="keywords" content="GANs" />
+    <meta name="author" content="" />
+    <link href="../css/PP-GANs.css" rel="stylesheet" type="text/css" />
+    <title>BeautyGAN: Instance-level Facial Makeup Transfer with Deep Generative Adversarial Network</title>
+</head>
+
+<body>
+
+
+<!-- --------------------------------
+-
+- header
+-
+---- --------------------------------
+-->
+<div id="header">
+    <div class="wrap">
+        <div id="intro">
+            <h1 align="center" id="logo">BeautyGAN: Instance-level Facial Makeup Transfer with Deep Generative Adversarial Network</h1>
+            <div align="center">
+                <table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td width="25%" height="30" align='center'><a target="_blank">Tingting Li<sup>1</sup></a></td>
+                        <td width="20%" height="30" align='center'><a target="_blank">Ruihe Qian<sup>2</sup></a></td>
+                        <td width="20%" height="30" align='center'><a target="_blank">Chao Dong<sup>3</sup></a></td>
+                        <td width="20%" height="30" align='center'><a target="_blank">Si Liu<sup>4</sup></a></td>
+                        <td width="20%" height="30" align='center'><a target="_blank">Qiong Yan<sup>5</sup></a></td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td width="25%" height="30" align='center'><a target="_blank">Wenwu Zhu<sup>1</sup></a></td>
+                        <td width="25%" height="30" align='center'><a target="_blank">Liang Lin<sup>6</sup></a></td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td height="20" colspan="4" align='center'><sup>1</sup>Tsinghua-Berkeley Shenzhen Institute, Tsinghua University</td>
+                        <p align="center">
+                        </p>
+                    </tr>
+                    <tr>
+                        <td height="20" colspan="4" align='center'><sup>2</sup>Institue of Information Engineering of CAS</td>
+                        <p align="center">
+                        </p>
+                    </tr>
+                    <tr>
+                        <td height="20" colspan="4" align='center'><sup>3</sup>SIAT-Sensetime Joint Lab, Shenzhen Institutes of Advanced Technology, Chinese Academy of Sciences</td>
+                        <p align="center">
+                        </p>
+                    </tr>
+                    <tr>
+                        <td height="20" colspan="4" align='center'><sup>4</sup>Beijing Key Laboratory of Digital Media, School of Computer Science and Engineering, Beihang University</td>
+                        <p align="center">
+                        </p>
+                    </tr>
+                    <tr>
+                        <td height="20" colspan="4" align='center'><sup>5</sup>SenseTime Research</td>
+                        <p align="center">
+                        </p>
+                    </tr>
+                    <tr>
+                        <td height="20" colspan="4" align='center'><sup>6</sup>Sun Yat-sen University</td>
+                        <p align="center">
+                        </p>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="nline1"></div>
+    </div>
+</div>
+
+
+
+<!-- --------------------------------
+-
+- Abstract
+-
+---- --------------------------------
+-->
+<div id="cont">
+    <div class="wrap">
+        <h2 id="subject">Abstract</h1>
+            <p align="justify" style="text-indent:2em">
+                Facial makeup transfer aims to translate the makeup style from a given reference makeup
+                face image to another non-makeup one while preserving face identity. Such an instance-level
+                transfer problem is more challenging than conventional domain-level transfer tasks,
+                especially when paired data is unavailable. Makeup style is also different from
+                global styles (e.g., paintings) in that it consists of several local styles/cosmetics,
+                including eye shadow, lip-stick, foundation, and so on. Extracting and transferring
+                such local and delicate makeup information is infeasible for existing style transfer methods.
+                We address the issue by incorporating both global domain-level loss and local instance-level
+                loss in an dual input/output Generative Adversarial Network, called BeautyGAN. Specically,
+                the domain-level transfer is ensured by discriminators that distinguish generated images
+                from domains’ real samples. The instance-level loss is calculated by pixel-level histogram
+                loss on separate local facial regions. We further introduce perceptual loss and
+                cycle consistency loss to generate high quality faces and preserve identity.
+                The overall objective function enables the network to learn translation on instance-level
+                through unsupervised adversarial learning. We also build up a new makeup dataset that
+                consists of 3834 high-resolution face images. Extensive experiments show
+            </p>
+            <div class="line"></div>
+    </div>
+</div>
+
+<!-- --------------------------------
+-
+- Dataset
+-
+---- --------------------------------
+-->
+<div id="cont">
+    <div class="wrap">
+        <h2 id="subject">Dataset</h1>
+            <p align="justify" style="text-indent:2em">
+            </p>
+                Our dataset is available at
+                <a href="https://pan.baidu.com/s/1DwTj4DvPWZFNNd1RsfA6jg"><I><U>Baidu Drive</U></I></a> (pwd: 3z1a) and
+            <a href="https://drive.google.com/open?id=18UlvYDL6UGZ2rs0yaDsSzoUlw8KI5ABY"><I><U>Google Drive</U></I></a>
+            <div class="line"></div>
+    </div>
+</div>
+
+<!-- --------------------------------
+-
+- Paper
+-
+---- --------------------------------
+-->
+<div id="cont">
+    <div class="wrap">
+        <h2 id="subject">Paper</h2>
+        <p align="justify" style="text-indent:2em">
+        </p>
+            Our paper:
+            <a href="../pdf/BeautyGAN-camera-ready_2.pdf"><I><U>BeautyGAN.pdf</U></I></a><BR><BR>
+            Our poster:
+            <a href="../pdf/BeautyGAN-camera-ready_2_poster.pdf"><I><U>Poster.pdf</U></I></a><BR><BR>
+            PPT is available at
+            <a href="https://pan.baidu.com/s/1OjrHGpUvNjcyLgr3y37oOg"><I><U>Baidu Drive</U></I></a> (pwd: ag72)
+        <div class="line"></div>
+    </div>
+</div>
+
+<div id="footer">
+
+</div>
+<div id="cont">
+    <div class="wrap">
+        <h2 id="subject">Performance</h2>
+        <p align="justify" style="text-indent:2em">
+        <U><I>Still in construction</I></U>
+    </div>
+</div>
+
+<!-- --------------------------------
+-
+- References
+-
+---- --------------------------------
+-->
+<div id="cont">
+    <div class="wrap">
+        <h2 id="subject">References</h2>
+        <p align="justify" style="text-indent:2em">
+        <U><I>Still in construction</I></U>
+        <ul class="ref-list" align="justify">
+
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>
