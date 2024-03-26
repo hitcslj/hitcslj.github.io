@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Stealing Stable Diffusion Prior for Robust Monocular Depth Estimation">
+
+  <meta name="keywords" content="SSD, Depth Estimation, ZoeDepth, MiDaS, ScanRefer,Stealing Stable Diffusion Prior for Robust Monocular Depth Estimation ">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Stealing Stable Diffusion Prior for Robust Monocular Depth Estimation</title>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./static/css/interactive_figures.css">
+  
+  <!-- <link rel="icon" href="./static/images/favicon.svg"> -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <!-- <script src="./static/js/index.js"></script> -->
+
+  <script src="https://kit.fontawesome.com/e8d9e5563c.js" crossorigin="anonymous"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function(event) { 
+        //do work
+      
+      const copyButtonLabel = "Copy BibTex";
+
+      // use a class selector if available
+      let blocks = document.querySelectorAll("pre");
+      console.log(blocks)
+      
+      blocks.forEach((block) => {
+        // only add button if browser supports Clipboard API
+        if (navigator.clipboard) {
+          let button = document.createElement("button");
+      
+          button.innerText = copyButtonLabel;
+          button.classList.add("btn");
+          button.classList.add("btn-primary");
+          button.style.alignContent = "center";
+          button.style.textAlign = "center";
+          block.parentElement.appendChild(button);
+      
+          button.addEventListener("click", async () => {
+            await copyCode(block, button);
+          });
+        }
+      });
+      
+      async function copyCode(block, button) {
+        let code = block.querySelector("code");
+        let text = code.innerText;
+      
+        await navigator.clipboard.writeText(text);
+      
+        // visual feedback that task is completed
+        button.innerText = "BibTex Copied!";
+      
+        setTimeout(() => {
+          button.innerText = copyButtonLabel;
+        }, 1000);
+      }
+  });
+  </script>
+
+  <style>
+
+    pre[class*="language-"] {
+      position: relative;
+      overflow: auto;
+    
+      /* make space  */
+      margin: 5px 0;
+      padding: 1.75rem 0 1.75rem 1rem;
+      border-radius: 10px;
+    }
+    
+    pre[class*="language-"] button {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+    
+      font-size: 0.9rem;
+      padding: 0.15rem;
+     
+    
+      border: ridge 1px;
+      border-radius: 5px;
+      text-shadow: #c4c4c4 0 0 2px;
+    }
+    
+    pre[class*="language-"] button:hover {
+      cursor: pointer;  
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Stealing Stable Diffusion Prior for Robust Monocular Depth Estimation</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://jluwula.github.io/">Yifan Mao</a>,  </span>
+            <span class="author-block">
+              <a href="https://hitcslj.github.io/">Jian Liu</a>,  </span>
+            <span class="author-block">
+            <span class="author-block">
+              <a href="https://homepage.hit.edu.cn/xmliu">Xianming Liu</a>
+            </span>
+            <!-- <span class="author-block">
+              Paper 4564
+            </span> -->
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">HIT</span>
+          </div>
+
+          <!-- <div class="is-size-5 publication-authors">
+            <span class="author-block">XXXX 2023</span>
+          </div> -->
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- Paper Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2403.05056" 
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              
+              
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/hitcslj/SSD"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Monocular depth estimation is a crucial task in computer vision. While existing methods have shown impressive results under standard conditions, they often face challenges in reliably performing in scenarios such as low-light or rainy conditions due to the absence of diverse training data. This paper introduces a novel approach named Stealing Stable Diffusion (<b>SSD</b>) prior for robust monocular depth estimation. The approach addresses this limitation by utilizing stable diffusion to generate synthetic images that mimic challenging conditions. Additionally, a self-training mechanism is introduced to enhance the model's depth estimation capability in such challenging environments. To enhance the utilization of the stable diffusion prior further, the DINOv2 encoder is integrated into the depth model architecture, enabling the model to leverage rich semantic priors and improve its scene understanding. Furthermore, a teacher loss is introduced to guide the student models in acquiring meaningful knowledge independently, thus reducing their dependency on the teacher models. The effectiveness of the approach is evaluated on nuScenes and Oxford RobotCar, two challenging public datasets, with the results showing the efficacy of the method.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="dataset-browser">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered">
+
+      <!-- Visual Effects. -->
+      <div class="column">
+        <div class="content" style="text-align:center;">
+          <h2 class="title is-3 has-text-centered">👀 Interactive Comparison</h2>
+          <p style="text-align:center; " class="has-text-centered">
+            Drag for interactive comparison
+          </p>
+
+          <p style="text-align:center; " class="has-text-centered">
+            <h2 class="title is-4">Night Samples from nuScenes</h2>
+          </p>
+
+
+          <img src="images/interactive/night.jpg" class="" style="width: 100%;margin-bottom: 2%;">
+          <iframe frameborder="0" class="juxtapose" style="width: 100%; height: 540px;" src="https://cdn.knightlab.com/libs/juxtapose/latest/embed/index.html?uid=737db410-eb64-11ee-9685-5d0fb8b12f54"></iframe>
+
+
+          <p style="text-align:center; " class="has-text-centered">
+            <h2 class="title is-4">Rainy Samples from nuScenes</h2>
+          </p>
+
+
+          <img src="images/interactive/rainy.jpg" class="" style="width: 100%;margin-bottom: 2%;">
+          <iframe frameborder="0" class="juxtapose" style="width: 100%; height: 540px;" src="https://cdn.knightlab.com/libs/juxtapose/latest/embed/index.html?uid=8d5a5900-eb65-11ee-9685-5d0fb8b12f54"></iframe>
+        
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <!-- Visual Effects. -->
+      <div class="column">
+        <div class="content" style="text-align:center;">
+          <h2 class="title is-3 has-text-centered">🔥 Method</h2>
+          <p style="text-align:center;" class="has-text-justified">
+            In this paper, we proposed the SSD, a novel approach aims at stealing stable diffusion prior for RMDE. SSD incorporates a new translation model called GDT, which is based on generative diffusion models. To adapt to GDT for RMDE, we integrate DINOv2 into our depth model's architecture, it helps to extract universal image features. Besides, we optimized the distillation loss used for knowledge distillation. Our approach is generalized and can be adapted to a variety of challenging conditions.
+          </p>
+          
+          <h2 class="title is-4"> Generative Diffusion model-based Translation </h2>
+          <img src="images/gdt_pipeline.png" class="" style="width: 80%;margin-bottom: 2%;">
+          <p style="text-align:center;" class="has-text-justified">
+          In this paper, we present a novel translation model called GDT (Generative Diffusion Model-based Translation). The objective of GDT is to generate a training sample Ig that closely resembles the day-clear image Id in terms of depth. To achieve this, we leverage the Stable Diffusion prior and introduce several control mechanisms to transform the day-clear image into challenging conditions while preserving specific characteristics.
+          </p>
+
+          <h2 class="title is-4">Stealing Stable Diffusion prior</h2>
+          <img src="images/ssd_pipeline.png" class="" style="width: 80%;margin-bottom: 2%;">
+
+          <p style="text-align:center;" class="has-text-justified">
+          In order to steal stable diffusion prior for robust depth estimation, we have made modifications to the architecture of Monodepth2. Additionally, we have employed a self-training strategy and introduced additional loss functions. 
+          
+          The Student Net receives guidance from the Teacher Net, leveraging a stable diffusion prior. The semantic loss ensures semantic consistency, while the teacher loss enables the Student Net to learn beyond the capabilities of the Teacher Net.
+          </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="dataset-browser">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <!-- Visual Effects. -->
+        <div class="column">
+          <div class="content" style="text-align:center;">
+            <h2 class="title is-3 has-text-centered">🚀 Qualitative Results</h2>
+            <img src="images/gdt_results.png" class="" style="width: 100%;margin-bottom: 2%;">
+            <p style="text-align: center; justify-content: center;">
+              <b>Generative diffusion model-based translation results on nuScenes.</b>
+            </p>
+        </div>
+
+        <div class="content" style="text-align:center;">
+          <img src="images/self-supervised.png" class="" style="width: 100%;margin-bottom: 2%;">
+          <p style="text-align: center; justify-content: center;">
+          <b>Self-supervised depth estimation results on nuScenes. </b>
+          </p>
+      </div>
+
+      </div>
+    </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content">
+          <h2 class="title is-3  has-text-centered">🔥 Citation</h2>
+            <div class="language-css">
+            <pre style="">
+<code>@article{mao2024stealing,
+  title={Stealing Stable Diffusion Prior for Robust Monocular Depth Estimation},
+  author={Mao, Yifan and Liu, Jian and Liu, Xianming},
+  journal={arXiv preprint arXiv:2403.05056},
+  year={2024}
+}</code></pre>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is based on the <a href="https://nerfies.github.io/">Nerfies website template</a>, which is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<script src="./static/js/interactive_figures.js"></script>
+</body>
+</html>
