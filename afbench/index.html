@@ -246,10 +246,13 @@
         <h2 class="title is-3">🚀 Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            The rapid development of generative models in various entertainment domains, such as image generation, has inspired engineering design. However, despite significant efforts and recent achievements, there are still several unexplored research directions, and progress falls short of satisfying real-world requirements. One of the major challenges is the lack of benchmarking datasets, common evaluation protocols, and open-source codebases.
+            Data-driven generative models have emerged as a promising approach towards achieving efficient and generalizable inverse design in mechanical engineering. However, due to their collections are prohibitively expensive, there are still absent in open-sourced and large-scale reference benchmarks representing real-world industrial applications. It is mainly the case for airfoil inverse design, which requires to generate and edit diverse and aerodynamic-qualified airfoils following the multimodal instructions, \emph{i.e.,} drags and physical geometric parameters. 
           </p>
           <p>
-          In this paper, we focus on airfoil inverse design and propose a comprehensive 2D airfoil dataset for studying controllable airfoil generation and editing. We also introduce metrics to evaluate the conditional constraints, diversity, and reasonableness of airfoil generation models. Additionally, we provide an open-source codebase that covers mainstream generative models, along with the corresponding results and analyses of airfoil generation. Our datasets and codebase are available at <a href="https://github.com/hitcslj/AFBench">https://github.com/hitcslj/AFBench</a>.
+            To the best of our knowledge, we present the very early open-source endeavors in large-scale airfoil inverse design, AFBench, including a large-scale dataset with 200 thousand airfoils and high-quality aerodynamic and geometric labels, a unified framework to enable mulitmodal controllable and airfoil generation and editing, and comprehensive metrics to evaluate various existing arifoil inverse design methods. Our aim is to establish AFBench a growing ecosystem for training and evaluating airfoil inverse design methods, with a specific focus on data-driven controllable inverse design models by multimodal instructions capable of bridging the gap between ideas and execution, the academic research and industrial applications. 
+          </p>
+          <p>
+            We have provided baseline models, comprehensive experimental observations, and analysis to accelerate future research. Our baseline model is trained on an RTX 3090 GPU, completing the training within 16 hours. The codebase, datasets and benchmarks will be available at <a href="https://hitcslj.github.io/afbench/">https://hitcslj.github.io/afbench/</a>.
           </p>
         </div>
       </div>
@@ -269,22 +272,20 @@
         <div class="content" style="text-align:center;">
           <h2 class="title is-3 has-text-centered">🔥 Method</h2>
           <p style="text-align:center;" class="has-text-justified">
-            In this paper, we proposed the SSD, a novel approach aims at stealing stable diffusion prior for RMDE. SSD incorporates a new translation model called GDT, which is based on generative diffusion models. To adapt to GDT for RMDE, we integrate DINOv2 into our depth model's architecture, it helps to extract universal image features. Besides, we optimized the distillation loss used for knowledge distillation. Our approach is generalized and can be adapted to a variety of challenging conditions.
+            In this paper, We propose the use of generative methods for two key tasks in airfoil design: airfoil generation and editing. Additionally, we establish a comprehensive benchmark dataset for evaluating these methods, leveraging the proposed airfoil dataset to provide a standardized evaluation framework.
           </p>
           
           <h2 class="title is-4"> Automatic Data Engine  </h2>
-          <img src="images/gdt_pipeline.png" class="" style="width: 80%;margin-bottom: 2%;">
+          <img src="images/airfoil-pipeline.png" class="" style="width: 80%;margin-bottom: 2%;">
           <p style="text-align:center;" class="has-text-justified">
-          In this paper, we present a novel translation model called GDT (Generative Diffusion Model-based Translation). The objective of GDT is to generate a training sample Ig that closely resembles the day-clear image Id in terms of depth. To achieve this, we leverage the Stable Diffusion prior and introduce several control mechanisms to transform the day-clear image into challenging conditions while preserving specific characteristics.
+          In this paper, We propose a comprehensive and diverse airfoil dataset to tackle the challenge of scaling law in Airfoil Generative Design. This dataset encompasses a wide range of airfoil shapes and is accompanied by detailed annotation labels, providing a valuable resource for training and evaluating generative models in this field.
           </p>
 
           <h2 class="title is-4">Benchmarking Setup</h2>
-          <img src="images/ssd_pipeline.png" class="" style="width: 80%;margin-bottom: 2%;">
+          <img src="images/baseline.png" class="" style="width: 80%;margin-bottom: 2%;">
 
           <p style="text-align:center;" class="has-text-justified">
-          In order to steal stable diffusion prior for robust depth estimation, we have made modifications to the architecture of Monodepth2. Additionally, we have employed a self-training strategy and introduced additional loss functions. 
-          
-          The Student Net receives guidance from the Teacher Net, leveraging a stable diffusion prior. The semantic loss ensures semantic consistency, while the teacher loss enables the Student Net to learn beyond the capabilities of the Teacher Net.
+            In this paper, We construct and open-source a codebase that encompasses generative methods in airfoil design, including foundational techniques such as cVAE, cGAN, cVAE-GAN, Bezeir-cGAN, as well as advanced models like PK-VAE and PK-DiT. We provide a user-friendly demo that allows for visualizing and experiencing airfoil design in real-time.
           </p>
       </div>
     </div>
@@ -298,19 +299,14 @@
         <!-- Visual Effects. -->
         <div class="column">
           <div class="content" style="text-align:center;">
-            <h2 class="title is-3 has-text-centered">🚀 Qualitative Results</h2>
-            <img src="images/gdt_results.png" class="" style="width: 100%;margin-bottom: 2%;">
+            <h2 class="title is-3 has-text-centered">🚀 Airfoil Demo</h2>
+            <img src="images/airfoil-demo.png" class="" style="width: 100%;margin-bottom: 2%;">
             <p style="text-align: center; justify-content: center;">
-              <b>Generative diffusion model-based translation results on nuScenes.</b>
+              <b>Our Airfoil Generation and Editing Software. 
+                (a) Generating airfoils and editing their physical parameters. 
+                (b) Editing the control keypoints of the airfoil.</b>
             </p>
         </div>
-
-        <div class="content" style="text-align:center;">
-          <img src="images/self-supervised.png" class="" style="width: 100%;margin-bottom: 2%;">
-          <p style="text-align: center; justify-content: center;">
-          <b>Self-supervised depth estimation results on nuScenes. </b>
-          </p>
-      </div>
 
       </div>
     </div>
