@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="description"
-        content="AFBench: A Large-scale Benchmark for Airfoil Inverse Design">
+        content="AFBench: A Large-scale Benchmark for Airfoil Design">
 
-  <meta name="keywords" content="AFBench: A Large-scale Benchmark for Airfoil Inverse Design ">
+  <meta name="keywords" content="AFBench: A Large-scale Benchmark for Airfoil Design ">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>AFBench: A Large-scale Benchmark for Airfoil Inverse Design</title>
+  <title>AFBench: A Large-scale Benchmark for Airfoil Design</title>
   <script>
     window.dataLayer = window.dataLayer || [];
 
@@ -140,7 +140,7 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">AFBench: A Large-scale Benchmark for Airfoil Inverse Design</h1>
+          <h1 class="title is-1 publication-title">AFBench: A Large-scale Benchmark for Airfoil Design</h1>
           <div class="is-size-5 publication-authors">
             <span class="author-block">
               <span class="author-block">
@@ -166,13 +166,13 @@
                 <a href="http://homepage.hit.edu.cn/jiangjunjun">Junjun Jiang</a><sup>1</sup>,
               </span>
               <span class="author-block">
+                <a href="https://homepage.hit.edu.cn/xmliu">Xianming Liu</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
                 <a href="">Shixiang Tang</a><sup>2</sup>,
               </span>
               <span class="author-block">
-                <a href="">Miao Zhang</a><sup>3</sup>,
-              </span>
-              <span class="author-block">
-                <a href="https://homepage.hit.edu.cn/xmliu">Xianming Liu</a><sup>1</sup>
+                <a href="">Miao Zhang</a><sup>3</sup>
               </span>
             </div>
 
@@ -182,10 +182,6 @@
             <span class="author-block"><sup>3</sup>Shanghai Aircraft Design and Research Institute</span>
           </div>
           
-
-   
-
-
               <div class="column has-text-centered">
                 <div class="publication-links">
                   <!-- Paper Link. -->
@@ -246,14 +242,13 @@
         <h2 class="title is-3">🚀 Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Data-driven generative models have emerged as promising approaches towards achieving efficient and generalizable inverse design in mechanical engineering. However, due to prohibitively high cost in time and money, there is still lack of open-source and large-scale benchmark for mechanical inverse design. It is mainly the case for airfoil inverse design, which requires to generate and edit diverse and aerodynamic-qualified airfoils following the multimodal instructions, <em>i.e.,</em> dragging points and physical parameters.
+            Data-driven generative models have emerged as promising approaches towards achieving efficient mechanical inverse design. However, due to prohibitively high cost in time and money, there is still lack of open-source and large-scale benchmarks in this field. It is mainly the case for airfoil inverse design, which requires to generate and edit diverse geometric-qualified  and aerodynamic-qualified airfoils following the multimodal instructions,<em>i.e.,</em> dragging points and physical parameters.
           </p>
           <p>
-            To address the problem, we present the open-source endeavors in airfoil inverse design, <em>AFBench</em>, including a large-scale dataset with 200 thousand airfoils and high-quality aerodynamic and geometric labels, two novel and practical airfoil inverse design tasks, <em>i.e.,</em> conditional generation on multimodal physical parameters, controllable editing, and comprehensive metrics to evaluate various existing airfoil inverse design methods.
+            This paper presents the open-source endeavors in airfoil inverse design,<em>AFBench</em>, including a large-scale dataset with 200 thousand airfoils and high-quality aerodynamic and geometric labels, two novel and practical airfoil inverse design tasks, <em>i.e.,</em> conditional generation on multimodal physical parameters, controllable editing, and comprehensive metrics to evaluate various existing airfoil inverse design methods. 
           </p>
           <p>
-            Our aim is to establish <em>AFBench</em> as an ecosystem for training and evaluating airfoil inverse design methods, with a specific focus on data-driven controllable inverse design models by multimodal instructions capable of bridging the gap between ideas and execution, the academic research and industrial applications.
-            We have provided baseline models, comprehensive experimental observations, and analysis to accelerate future research. Our baseline model is trained on an RTX 3090 GPU, completing the training within 16 hours. The codebase, datasets and benchmarks will be available at <a href="https://hitcslj.github.io/afbench/">https://hitcslj.github.io/afbench/</a>.
+            Our aim is to establish <em>AFBench</em> as an ecosystem for training and evaluating airfoil inverse design methods, with a specific focus on data-driven controllable inverse design models by multimodal instructions capable of bridging the gap between ideas and execution, the academic research and industrial applications. We have provided baseline models, comprehensive experimental observations, and analysis to accelerate future research. Our baseline model is trained on an RTX 3090 GPU within 16 hours. The codebase, datasets and benchmarks will be available at <a href="https://hitcslj.github.io/afbench/">https://hitcslj.github.io/afbench/</a>.
           </p>
         </div>
       </div>
@@ -301,7 +296,7 @@
         <div class="column">
           <div class="content" style="text-align:center;">
             <h2 class="title is-3 has-text-centered">🚀 Airfoil Demo</h2>
-            <img src="images/airfoil-demo-new.png" class="" style="width: 100%;margin-bottom: 2%;">
+            <img src="images/airfoil-demo.png" class="" style="width: 100%;margin-bottom: 2%;">
             <p style="text-align: center; justify-content: center;">
               <b>Our Airfoil Generation and Editing Software. 
                 (a) Generating airfoils and editing their physical parameters. 
