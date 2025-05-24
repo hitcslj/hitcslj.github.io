@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Mesh-RFT: Enhancing Mesh Generation via Fine-Grained Reinforcement Fine-Tuning">
+    <meta name="keywords" content="Autoregressive Mesh Generation, Reinforcement Learning, Topology Optimization">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mesh-RFT: Enhancing Mesh Generation via Fine-Grained Reinforcement Fine-Tuning</title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+
+    <style>
+		.render_wrapper {
+			position: relative;
+            height: 300px;
+         }
+        .render_wrapper_small {
+			position: relative;
+            height: 200px;
+         }
+		.render_div {
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+
+        #interpolation-image-wrapper-car{
+            text-align: center;
+        }
+        #interpolation-image-wrapper-chair{
+            text-align: center;
+        }
+        .nested-columns {
+            margin-bottom: 0 !important;
+        }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/index.js"></script>
+</head>
+
+<body>
+
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <div class="columns is-centered">
+                    <div class="column has-text-centered">
+                        <h1 class="title is-1 publication-title">Mesh-RFT: Enhancing Mesh Generation via Fine-Grained Reinforcement Fine-Tuning</h1>    
+                        <div class="is-size-4 publication-authors">
+                            <span class="author-block">
+                                <a href="https://hitcslj.github.io/">Jian Liu</a><sup>1,2*</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a href="./index.html">Jing Xu</a><sup>2*</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a href="https://cse.hkust.edu.hk/~songguo/">Song Guo</a><sup>1†</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a href="./index.html">Jing Li</a><sup>2,3</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a href="./index.html">Jingfeng Guo</a><sup>2,4</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a href="./index.html">Jiaao Yu</a><sup>2</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a href="https://whaohan.github.io/">Haohan Weng</a><sup>2,4</sup>,</span>
+                            <span class="author-block">
+                                <a href="https://scholar.google.com/citations?user=5d5Y9BoAAAAJ">Biwen Lei</a><sup>2</sup>,</span>
+                            <span class="author-block">
+                                <a href="https://wi-sc.github.io/xianghui-yang/">Xianghui Yang</a><sup>2</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a href="./index.html">Zhuo Chen</a><sup>2</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a href="https://fangqi-zhu.github.io/">Fangqi Zhu</a><sup>1</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a href="https://scholar.google.com/citations?user=a3OxwlMAAAAJ&hl=zh-CN">Tao Han</a><sup>1</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a href="./index.html">Chunchao Guo</a><sup>2†</sup>
+                            </span>
+                        </div>
+
+                        <div class="is-size-5 publication-authors">
+                            <span class="author-block"><sup>1</sup>Hong Kong University of Science and Technology,</span>
+                            <span class="author-block"><sup>2</sup>Tencent Hunyuan,</span>
+                            <span class="author-block"><sup>3</sup>University of Science and Technology of China,</span>
+                            <span class="author-block">
+                                <sup>4</sup>South China University of Technology</a>
+                            </span>
+                        </div>
+                        <div class="is-size-6 has-text-centered" style="margin-top: 1rem;">
+                            <sup>*</sup> Indicates Equal Contribution &nbsp;&nbsp;&nbsp;&nbsp; <sup>†</sup> Indicates Corresponding Author
+                          </div>
+                
+
+                        <div class="column has-text-centered">
+                            <div class="publication-links">
+                                <span class="link-block">
+                                    <a class="external-link button is-normal is-rounded is-dark" href="https://arxiv.org/abs/2505.16761">
+                                        <span class="icon">
+                                            <i class="ai ai-arxiv"></i>
+                                        </span>
+                                        <span>ArXiv</span>
+                                    </a>
+                                </span>
+                                <!-- Github Link. -->
+                                <span class="link-block">
+                                    <a href="https://github.com/hitcslj/Mesh-RFT" class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="fab fa-github"></i>
+                                        </span>
+                                        <span>Code(Coming Soon)</span>
+                                    </a>
+                                </span>
+                                <!-- Dataset Link. -->
+                                <span class="link-block"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section class="hero is-light is-small">
+        <h2 class="title is-3" style="text-align: center;"> Demo Video </h2>
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-full-width">
+                <div class="column">
+                    <!-- 视频播放器，默认不静音 -->
+                    <video id="teaser" autoplay loop playsinline width="900" height="600">
+                        <source src="static/video/teaser_video.mp4" type="video/mp4">
+                    </video>
+                    <p>
+                        <strong> Mesh-RFT can generate product-ready meshes 
+                        when conditioned on point cloud 
+                        derived from dense meshes generated by Hunyuan3D.</strong> 
+                    </p>
+                </div>
+            </div>
+        </div>
+    
+        <script>
+            // 处理自动播放策略 - 用户交互后尝试播放带声音的视频
+            document.addEventListener('click', function enableSoundAfterInteraction() {
+                const video = document.getElementById('teaser');
+                video.muted = false;
+                video.play().catch(e => console.log('自动播放失败:', e));
+                document.removeEventListener('click', enableSoundAfterInteraction);
+            });
+        </script>
+    </section>
+
+
+ 
+
+   <!-- Paper abstract -->
+   <section class="hero is-light is-small">
+    <div class="container is-max-desktop">
+        <h2 class="title is-3" style="text-align: center;">Abstract</h2>
+        <div class="content has-text-justified">
+            <p>
+                Existing pretrained models for 3D mesh generation often suffer from data biases and produce low-quality results, while global reinforcement learning (RL) methods rely on object-level rewards that struggle to capture local structure details. 
+                To address these challenges, we present <b>Mesh-RFT</b>, a novel fine-grained reinforcement fine-tuning framework that employs Masked Direct Preference Optimization (M-DPO) to enable localized refinement via quality-aware face masking. 
+                To facilitate efficient quality evaluation, we introduce an objective topology-aware scoring system to evaluate geometric integrity and topological regularity at both object and face levels through two metrics: Boundary Edge Ratio (BER) and Topology Score (TS). 
+                By integrating these metrics into a fine-grained RL strategy, Mesh-RFT becomes the first method to optimize mesh quality at the granularity of individual faces, resolving localized errors while preserving global coherence. 
+                Experiment results show that our M-DPO approach reduces Hausdorff Distance (HD) by 24.6% and improves Topology Score (TS) by 3.8% over pre-trained models, while outperforming global DPO methods with a 17.4% HD reduction and 4.9% TS gain. 
+                These results demonstrate Mesh-RFT's ability to improve geometric integrity and topological regularity, achieving new state-of-the-art performance in production-ready mesh generation.
+            </p>
+        </div>
+        <h2 class="title is-3" style="text-align: center;">Method</h2>
+        <img width="1450px" src="./static/images/pipeline.png" alt="MY ALT TEXT"/> 
+        <div class="content has-text-justified">
+            <p>
+            <b>The proposed Mesh-RFT Framework.</b>
+            The pipeline comprises three stages: 1) Mesh Generation Pre-training using an Hourglass AutoRegressive Transformer and a Shape Encoder; 
+            2) Preference Dataset Construction where a pretrained model generates candidate meshes, and a topology-aware score system establishes preference pairs; 
+            and 3) Mesh Generation Post-training which employs Mask DPO with reference and policy networks for subsequent refinement.
+            </p>
+        </div>
+        <h2 class="title is-3" style="text-align: center;">Mesh Generation Progress</h2>
+                <p style="text-align: center;">
+                    During training, meshes are arranged in a bottom-up manner, resulting in generated meshes being produced in a sequential bottom-to-top order.
+                </p>
+                <div class="columns is-mobile is-centered">
+                    <!-- 左侧GIF -->
+                    <div class="column is-narrow">
+                        <div class="gif-container" style="width: 500px; height: 500px; overflow: hidden; margin: 0 auto;">
+                            <img 
+                                id="animation-left" 
+                                src="static/video/artist.gif" 
+                                alt="Mesh Generation Left View" 
+                                style="width: 100%; height: 100%; object-fit: contain;"
+                            >
+                        </div>
+                        <p class="mt-2">Generated Mesh Conditioned on point cloud from <strong> Artist Mesh</strong>  </p>
+                    </div>
+                    
+                    <!-- 右侧GIF -->
+                    <div class="column is-narrow">
+                        <div class="gif-container" style="width: 500px; height: 500px; overflow: hidden; margin: 0 auto;">
+                            <img 
+                                id="animation-right" 
+                                src="static/video/dense.gif" 
+                                alt="Mesh Generation Right View" 
+                                style="width: 100%; height: 100%; object-fit: contain;"
+                            >
+                        </div>
+                        <p class="mt-2">Generated Mesh Conditioned on point cloud from <strong> Dense Mesh</strong> </p>
+                    </div>
+        </div>
+    </div>
+ 
+    
+</section>
+
+<script>
+    window.addEventListener("DOMContentLoaded", function() {
+        // 初始化时调整GIF尺寸
+        adjustGifSizes();
+        
+        // 窗口大小变化时重新调整
+        window.addEventListener('resize', adjustGifSizes);
+        
+        function adjustGifSizes() {
+            const gifs = document.querySelectorAll('img[id^="animation-"]');
+            gifs.forEach(gif => {
+                gif.style.width = '500px';
+                gif.style.height = '500px';
+            });
+        }
+    });
+</script>
+ 
+
+    <section class="section" id="BibTeX">
+        <div class="container is-max-desktop content">
+            <h2 class="title is-4">BibTeX</h2>
+            <pre>
+                <code>@misc{liu2025meshrftenhancingmeshgeneration,
+                    title={Mesh-RFT: Enhancing Mesh Generation via Fine-grained Reinforcement Fine-Tuning}, 
+                    author={Jian Liu and Jing Xu and Song Guo and Jing Li and Jingfeng Guo and Jiaao Yu and Haohan Weng and Biwen Lei and Xianghui Yang and Zhuo Chen and Fangqi Zhu and Tao Han and Chunchao Guo},
+                    year={2025},
+                    eprint={2505.16761},
+                    archivePrefix={arXiv},
+                    primaryClass={cs.CV},
+                    url={https://arxiv.org/abs/2505.16761}, 
+              }</code>
+            </pre>
+        </div>
+    </section>
+
+
+    <footer class="footer">
+        <div class="container">
+            <div class="content has-text-centered">
+                <a class="icon-link" href="https://hitcslj.github.io/" class="external-link">
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
+            <div class="columns is-centered">
+                <div class="column is-8">
+                    <div class="content">
+                        <p style="text-align:center">
+                            Source code mainly borrowed from <a href="https://keunhong.com/">Keunhong Park</a>'s <a
+                                href="https://nerfies.github.io/">Nerfies website</a>.
+                        </p>
+                        <p style="text-align:center">
+                            Please contact <a href="https://hitcslj.github.io/">Jian Liu</a> for feedback and questions.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    
+
+</body>
+
+</html>
