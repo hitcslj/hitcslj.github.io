@@ -1,0 +1,258 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+	<script type="module">
+	window.switchSrc = (element, base, name, viewer_id, slides_id) => {
+		const modelViewer = document.querySelector(`#${viewer_id}`);
+		base = base + name;
+		modelViewer.src = base + '.glb';
+		modelViewer.poster = base + '.jpg';
+		const slides = document.querySelector(`#${slides_id}`).querySelectorAll(".slide");
+		slides.forEach((element) => {element.classList.remove("selected");});
+		element.classList.add("selected");
+	};
+
+	document.querySelector(".slider").addEventListener('beforexrselect', (ev) => {
+		// Keep slider interactions from affecting the XR scene.
+		ev.preventDefault();
+	});
+	</script>
+
+	<style>
+	/* This keeps child nodes hidden while the element loads */
+	:not(:defined) > * {
+		display: none;
+	}
+
+	model-viewer {
+		background-color: #eee;
+		overflow-x: hidden;
+	}
+
+	#ar-button {
+		background-image: url(../../assets/ic_view_in_ar_new_googblue_48dp.png);
+		background-repeat: no-repeat;
+		background-size: 20px 20px;
+		background-position: 12px 50%;
+		background-color: #fff;
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+		white-space: nowrap;
+		bottom: 132px;
+		padding: 0px 16px 0px 40px;
+		font-family: Roboto Regular, Helvetica Neue, sans-serif;
+		font-size: 14px;
+		color:#4285f4;
+		height: 36px;
+		line-height: 36px;
+		border-radius: 18px;
+		border: 1px solid #DADCE0;
+	}
+
+	#ar-button:active {
+		background-color: #E8EAED;
+	}
+
+	#ar-button:focus {
+		outline: none;
+	}
+
+	#ar-button:focus-visible {
+		outline: 1px solid #4285f4;
+	}
+
+	@keyframes circle {
+		from { transform: translateX(-50%) rotate(0deg) translateX(50px) rotate(0deg); }
+		to   { transform: translateX(-50%) rotate(360deg) translateX(50px) rotate(-360deg); }
+	}
+
+	@keyframes elongate {
+		from { transform: translateX(100px); }
+		to   { transform: translateX(-100px); }
+	}
+
+	model-viewer > #ar-prompt {
+		position: absolute;
+		left: 50%;
+		bottom: 175px;
+		animation: elongate 2s infinite ease-in-out alternate;
+		display: none;
+	}
+
+	model-viewer[ar-status="session-started"] > #ar-prompt {
+		display: block;
+	}
+
+	model-viewer > #ar-prompt > img {
+		animation: circle 4s linear infinite;
+	}
+
+	model-viewer > #ar-failure {
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+		bottom: 175px;
+		display: none;
+	}
+
+	model-viewer[ar-tracking="not-tracking"] > #ar-failure {
+		display: block;
+	}
+
+	.slider {
+		width: 100%;
+		text-align: center;
+		overflow: hidden;
+		position: absolute;
+		bottom: 16px;
+	}
+
+	.slides {
+		display: flex;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		scroll-behavior: smooth;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.slide {
+		scroll-snap-align: start;
+		flex-shrink: 0;
+		width: 100px;
+		height: 100px;
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: center;
+		background-color: #fff;
+		margin-right: 10px;
+		border-radius: 10px;
+		border: none;
+		display: flex;
+	}
+
+	.slide.selected {
+		border: 2px solid #4285f4;
+	}
+
+	.slide:focus {
+		outline: none;
+	}
+
+	.slide:focus-visible {
+		outline: 1px solid #4285f4;
+	}
+
+	.code-block {
+		display: block;
+		text-align: left;
+		white-space: pre;
+		margin: 0;
+		padding: 0;
+	}
+
+	</style>
+	<head>
+		<title>QuadGPT: Native Quadrilateral Mesh Generation with Autoregressive Models</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper" class="fade-in">
+
+				<!-- Intro -->
+					<div id="intro">
+						<h1>QuadGPT: <br/>Native Quadrilateral Mesh Generation with Autoregressive Models</h1>
+						<p><a href="https://hitcslj.github.io/">Jian Liu</a><sup>1,2</sup>, <a href="https://chunshi.wang/">Chunshi Wang</a><sup>2</sup>, <a href="https://cse.hkust.edu.hk/~songguo/">Song Guo<a></a><sup>1</sup>, <a href="https://whaohan.github.io/">Haohan Weng</a><sup>2</sup>, <a href="https://scholar.google.com/citations?user=NHitQ88AAAAJ&hl=zh-CN">Zhen Zhou</a><sup>2</sup>, <a href="https://scholar.google.com.hk/citations?user=AnyChZAAAAAJ&hl=nl">Zhiqi Li</a><sup>2</sup>, </a href="https://openreview.net/profile?id=~Jiaao_Yu1">Jiaao Yu</a><sup>2</sup>, Yiling Zhu<sup>2</sup>, Jing Xu<sup>2</sup>, Biwen Lei<sup>2</sup>, Zhuo Chen<sup>2</sup>,Chunchao Guo<sup>2</sup></p>
+						<p><sup>1</sup>HKUST, <sup>2</sup>Tencent Hunyuan</p>
+						<p>	<a href="https://arxiv.org/abs/2509.21420"><img src="https://img.shields.io/badge/arXiv-2509.21420-red"/></a> 
+							<a href="https://3d.hunyuan.tencent.com/studio"><img src="https://img.shields.io/badge/Hunyuan3D-Studio-blue"/></a>
+							<a href="https://3d.hunyuan.tencent.com/"><img src="https://img.shields.io/badge/Hunyuan-3D-blue"/></a>
+						</p>
+						<ul class="actions">
+							<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
+						</ul>
+					</div>
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo">QuadGPT</a>
+					</header>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Featured Post -->
+							<article class="post featured">
+								<header class="major">
+									<span class="date"><b>ABSTRACT</b></span>
+								</header>
+								<p>
+The generation of quadrilateral-dominant meshes is a cornerstone of professional 3D content creation. 
+However, existing generative models generate quad meshes by first generating triangle meshes and then merging triangles into quadrilaterals with some specific rules, which typically produces quad meshes with poor topology.
+In this paper, we introduce QuadGPT, the first autoregressive framework for generating quadrilateral meshes in an end-to-end manner. 
+QuadGPT formulates this as a sequence prediction paradigm, distinguished by two key innovations: a unified tokenization method to handle mixed topologies of triangles and quadrilaterals, and a specialized Reinforcement Learning fine-tuning method tDPO for better generation quality. 
+Extensive experiments demonstrate that QuadGPT significantly surpasses previous triangle-to-quad conversion pipelines in both geometric accuracy and topological quality. 
+Our work establishes a new benchmark for native quad-mesh generation and showcases the power of combining large-scale autoregressive models with topology-aware RL refinement for creating structured 3D assets.								</p>
+								<a class="image main"><img src="images/teaser.jpg" alt="" /></a>
+							</article>
+							<article class="post featured">
+								<header class="major">
+									<span class="date"><b>METHOD</b></span>
+								</header>
+								<a class="image main"><img src="images/method.jpg" alt="" /></a>
+								<p>
+									Our approach, QuadGPT, introduces the first autoregressive framework for the direct generation of native quadrilateral and mixed-element meshes. The methodology consists of three core pillars:   (1) a unified serialization scheme to represent mixed-topology meshes as a single token sequence; (2) a powerful autoregressive architecture for generative pre-training; and (3) tDPO stage with a novel topological reward for direct topological optimization.
+								</p>
+								<header class="major">
+									<video src="images/demo.webm" controls autoplay loop style="width: 100%;"></video>
+								</header>
+							</article>				
+						
+							<article class="post featured">
+								<header class="major">
+									<span class="date"><b>CITATION</b></span>
+								</header>
+								<p>If you find our work useful in your research, please consider citing us:</p>
+								<pre>
+								<code class="code-block">
+@misc{liu2025quadgptnativequadrilateralmesh,
+      title={QuadGPT: Native Quadrilateral Mesh Generation with Autoregressive Models}, 
+      author={Jian Liu and Chunshi Wang and Song Guo and Haohan Weng and Zhen Zhou and Zhiqi Li and Jiaao Yu and Yiling Zhu and Jing Xu and Biwen Lei and Zhuo Chen and Chunchao Guo},
+      year={2025},
+      eprint={2509.21420},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2509.21420}, 
+}
+								</code>
+								</pre>
+							</article>
+					</div>
+
+				<!-- Copyright -->
+					<div id="copyright">
+						<ul><li>&copy; Jian Liu</li><li>2025-09-29</li></ul>
+					</div>
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
