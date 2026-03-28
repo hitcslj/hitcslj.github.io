@@ -1,265 +1,620 @@
 <!DOCTYPE HTML>
-<!--
-	Massively by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
-	<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
-	<script type="module">
-	window.switchSrc = (element, base, name, viewer_id, slides_id) => {
-		const modelViewer = document.querySelector(`#${viewer_id}`);
-		base = base + name;
-		modelViewer.src = base + '.glb';
-		modelViewer.poster = base + '.jpg';
-		const slides = document.querySelector(`#${slides_id}`).querySelectorAll(".slide");
-		slides.forEach((element) => {element.classList.remove("selected");});
-		element.classList.add("selected");
-	};
-
-	document.querySelector(".slider").addEventListener('beforexrselect', (ev) => {
-		// Keep slider interactions from affecting the XR scene.
-		ev.preventDefault();
-	});
-	</script>
-
-	<style>
-	/* This keeps child nodes hidden while the element loads */
-	:not(:defined) > * {
-		display: none;
-	}
-
-	model-viewer {
-		background-color: #eee;
-		overflow-x: hidden;
-	}
-
-	#ar-button {
-		background-image: url(../../assets/ic_view_in_ar_new_googblue_48dp.png);
-		background-repeat: no-repeat;
-		background-size: 20px 20px;
-		background-position: 12px 50%;
-		background-color: #fff;
-		position: absolute;
-		left: 50%;
-		transform: translateX(-50%);
-		white-space: nowrap;
-		bottom: 132px;
-		padding: 0px 16px 0px 40px;
-		font-family: Roboto Regular, Helvetica Neue, sans-serif;
-		font-size: 14px;
-		color:#4285f4;
-		height: 36px;
-		line-height: 36px;
-		border-radius: 18px;
-		border: 1px solid #DADCE0;
-	}
-
-	#ar-button:active {
-		background-color: #E8EAED;
-	}
-
-	#ar-button:focus {
-		outline: none;
-	}
-
-	#ar-button:focus-visible {
-		outline: 1px solid #4285f4;
-	}
-
-	@keyframes circle {
-		from { transform: translateX(-50%) rotate(0deg) translateX(50px) rotate(0deg); }
-		to   { transform: translateX(-50%) rotate(360deg) translateX(50px) rotate(-360deg); }
-	}
-
-	@keyframes elongate {
-		from { transform: translateX(100px); }
-		to   { transform: translateX(-100px); }
-	}
-
-	model-viewer > #ar-prompt {
-		position: absolute;
-		left: 50%;
-		bottom: 175px;
-		animation: elongate 2s infinite ease-in-out alternate;
-		display: none;
-	}
-
-	model-viewer[ar-status="session-started"] > #ar-prompt {
-		display: block;
-	}
-
-	model-viewer > #ar-prompt > img {
-		animation: circle 4s linear infinite;
-	}
-
-	model-viewer > #ar-failure {
-		position: absolute;
-		left: 50%;
-		transform: translateX(-50%);
-		bottom: 175px;
-		display: none;
-	}
-
-	model-viewer[ar-tracking="not-tracking"] > #ar-failure {
-		display: block;
-	}
-
-	.slider {
-		width: 100%;
-		text-align: center;
-		overflow: hidden;
-		position: absolute;
-		bottom: 16px;
-	}
-
-	.slides {
-		display: flex;
-		overflow-x: auto;
-		scroll-snap-type: x mandatory;
-		scroll-behavior: smooth;
-		-webkit-overflow-scrolling: touch;
-	}
-
-	.slide {
-		scroll-snap-align: start;
-		flex-shrink: 0;
-		width: 100px;
-		height: 100px;
-		background-size: contain;
-		background-repeat: no-repeat;
-		background-position: center;
-		background-color: #fff;
-		margin-right: 10px;
-		border-radius: 10px;
-		border: none;
-		display: flex;
-	}
-
-	.slide.selected {
-		border: 2px solid #4285f4;
-	}
-
-	.slide:focus {
-		outline: none;
-	}
-
-	.slide:focus-visible {
-		outline: 1px solid #4285f4;
-	}
-
-	.code-block {
-		display: block;
-		text-align: left;
-		white-space: pre;
-		margin: 0;
-		padding: 0;
-	}
-
-	</style>
 	<head>
 		<title>QuadGPT: Native Quadrilateral Mesh Generation with Autoregressive Models</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<style>
+			/* ===== 自定义样式 ===== */
+
+			/* 导航栏链接 */
+			#nav ul li a {
+				font-size: 0.85em;
+				letter-spacing: 0.1em;
+			}
+
+			/* 作者信息 */
+			.author-list {
+				font-size: 1em;
+				line-height: 1.8;
+				margin-bottom: 0.5em;
+			}
+			.author-list sup {
+				font-size: 0.7em;
+				color: #aaa;
+			}
+			.affiliation {
+				font-size: 0.9em;
+				color: #bbb;
+				margin-bottom: 1em;
+			}
+
+			/* Badge 按钮区 */
+			.badge-row {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 10px;
+				justify-content: center;
+				margin: 1em 0;
+			}
+			.badge-row a img {
+				height: 24px;
+				vertical-align: middle;
+			}
+			.badge-btn {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				padding: 6px 14px;
+				border-radius: 6px;
+				font-size: 0.85em;
+				font-weight: 600;
+				text-decoration: none;
+				transition: opacity 0.2s;
+				border: none;
+			}
+			.badge-btn:hover { opacity: 0.85; }
+			.badge-btn.arxiv   { background: #b31b1b; color: #fff; }
+			.badge-btn.studio  { background: #1a73e8; color: #fff; }
+			.badge-btn.hunyuan { background: #0d47a1; color: #fff; }
+			.badge-btn.pdf     { background: #e65100; color: #fff; }
+			.badge-btn.poster  { background: #6a1b9a; color: #fff; }
+
+			/* 贡献点列表 */
+			.contributions {
+				text-align: left;
+				margin: 1.2em auto;
+				max-width: 820px;
+			}
+			.contributions li {
+				margin-bottom: 0.6em;
+				line-height: 1.6;
+			}
+			.contributions li::marker {
+				color: #49bf9d;
+			}
+
+			/* 方法三大支柱 */
+			.pillars {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 1.2em;
+				justify-content: center;
+				margin: 1.5em 0;
+			}
+			.pillar-card {
+				flex: 1 1 220px;
+				max-width: 280px;
+				background: rgba(255,255,255,0.04);
+				border: 1px solid rgba(255,255,255,0.1);
+				border-radius: 10px;
+				padding: 1.2em 1.4em;
+				text-align: left;
+			}
+			.pillar-card .pillar-num {
+				font-size: 1.8em;
+				font-weight: 700;
+				color: #49bf9d;
+				line-height: 1;
+				margin-bottom: 0.3em;
+			}
+			.pillar-card h4 {
+				font-size: 0.95em;
+				font-weight: 700;
+				margin: 0.3em 0 0.5em;
+				color: #fff;
+				text-transform: none;
+				letter-spacing: 0;
+				border: none;
+			}
+			.pillar-card p {
+				font-size: 0.82em;
+				color: #bbb;
+				margin: 0;
+				line-height: 1.5;
+			}
+
+			/* 定量结果表格 */
+			.results-table {
+				width: 100%;
+				border-collapse: collapse;
+				font-size: 0.82em;
+				margin: 1.2em 0;
+				overflow-x: auto;
+				display: block;
+			}
+			.results-table th, .results-table td {
+				padding: 0.55em 0.8em;
+				text-align: center;
+				border-bottom: 1px solid rgba(255,255,255,0.1);
+				white-space: nowrap;
+			}
+			.results-table th {
+				background: rgba(73,191,157,0.15);
+				color: #49bf9d;
+				font-weight: 700;
+				font-size: 0.9em;
+			}
+			.results-table tr:hover td {
+				background: rgba(255,255,255,0.03);
+			}
+			.results-table .ours td {
+				font-weight: 700;
+				color: #49bf9d;
+			}
+			.results-table .section-header th {
+				background: rgba(255,255,255,0.06);
+				color: #ddd;
+				font-style: italic;
+				font-size: 0.85em;
+			}
+			.results-table .best { color: #49bf9d; font-weight: 700; }
+
+			/* 消融研究表格 */
+			.ablation-tables {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 1.5em;
+				justify-content: center;
+				margin: 1em 0;
+			}
+			.ablation-tables > div {
+				flex: 1 1 300px;
+				max-width: 420px;
+			}
+			.ablation-tables h4 {
+				font-size: 0.9em;
+				color: #ccc;
+				margin-bottom: 0.5em;
+				text-align: center;
+				text-transform: none;
+				letter-spacing: 0;
+				border: none;
+			}
+
+			/* BibTeX 代码块 */
+			.bibtex-block {
+				background: rgba(0,0,0,0.35);
+				border: 1px solid rgba(255,255,255,0.1);
+				border-radius: 8px;
+				padding: 1.2em 1.5em;
+				text-align: left;
+				font-family: 'Courier New', monospace;
+				font-size: 0.82em;
+				line-height: 1.7;
+				overflow-x: auto;
+				white-space: pre;
+				color: #ccc;
+				margin: 0.8em 0;
+			}
+
+			/* section 标题装饰 */
+			.section-tag {
+				display: inline-block;
+				background: rgba(73,191,157,0.15);
+				color: #49bf9d;
+				border: 1px solid rgba(73,191,157,0.4);
+				border-radius: 4px;
+				padding: 2px 10px;
+				font-size: 0.75em;
+				font-weight: 700;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				margin-bottom: 0.6em;
+			}
+
+			/* 视频容器 */
+			.video-container {
+				position: relative;
+				width: 100%;
+				border-radius: 8px;
+				overflow: hidden;
+				margin: 1em 0;
+			}
+			.video-container video {
+				width: 100%;
+				display: block;
+			}
+
+			/* 图片说明 */
+			.img-caption {
+				font-size: 0.82em;
+				color: #999;
+				text-align: center;
+				margin-top: 0.5em;
+				line-height: 1.5;
+			}
+
+			/* 响应式调整 */
+			@media (max-width: 600px) {
+				.pillars { flex-direction: column; align-items: center; }
+				.ablation-tables { flex-direction: column; }
+			}
+		</style>
 	</head>
 	<body class="is-preload">
 
 		<!-- Wrapper -->
-			<div id="wrapper" class="fade-in">
+		<div id="wrapper" class="fade-in">
 
-				<!-- Intro -->
-					<div id="intro">
-						<h1>QuadGPT: <br/>Native Quadrilateral Mesh Generation with Autoregressive Models</h1>
-						<p><a href="https://hitcslj.github.io/">Jian Liu</a><sup>1,2</sup>, <a href="https://chunshi.wang/">Chunshi Wang</a><sup>2</sup>, <a href="https://cse.hkust.edu.hk/~songguo/">Song Guo<a></a><sup>1</sup>, <a href="https://whaohan.github.io/">Haohan Weng</a><sup>2</sup>, <a href="https://scholar.google.com/citations?user=NHitQ88AAAAJ&hl=zh-CN">Zhen Zhou</a><sup>2</sup>, <a href="https://scholar.google.com.hk/citations?user=AnyChZAAAAAJ&hl=nl">Zhiqi Li</a><sup>2</sup>, </a href="https://openreview.net/profile?id=~Jiaao_Yu1">Jiaao Yu</a><sup>2</sup>, Yiling Zhu<sup>2</sup>, Jing Xu<sup>2</sup>, Biwen Lei<sup>2</sup>, Zhuo Chen<sup>2</sup>,Chunchao Guo<sup>2</sup></p>
-						<p><sup>1</sup>HKUST, <sup>2</sup>Tencent Hunyuan</p>
-						<p>	<a href="https://arxiv.org/abs/2509.21420"><img src="https://img.shields.io/badge/arXiv-2509.21420-red"/></a> 
-							<a href="https://3d.hunyuan.tencent.com/studio"><img src="https://img.shields.io/badge/Hunyuan3D-Studio-blue"/></a>
-							<a href="https://3d.hunyuan.tencent.com/"><img src="https://img.shields.io/badge/Hunyuan-3D-blue"/></a>
-						</p>
-						<ul class="actions">
-							<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
-						</ul>
-					</div>
+			<!-- Intro -->
+			<div id="intro">
+				<h1>QuadGPT</h1>
+				<p style="font-size:1.1em; color:#ccc; margin-bottom:0.3em;">Native Quadrilateral Mesh Generation with Autoregressive Models</p>
 
-				<!-- Header -->
-					<header id="header">
-						<a href="index.html" class="logo">QuadGPT</a>
-					</header>
+				<p class="author-list">
+					<a href="https://hitcslj.github.io/">Jian Liu</a><sup>1,2</sup>,&nbsp;
+					<a href="https://chunshi.wang/">Chunshi Wang</a><sup>2</sup>,&nbsp;
+					<a href="https://cse.hkust.edu.hk/~songguo/">Song Guo</a><sup>1</sup>,&nbsp;
+					<a href="https://whaohan.github.io/">Haohan Weng</a><sup>2</sup>,&nbsp;
+					<a href="https://scholar.google.com/citations?user=NHitQ88AAAAJ&hl=zh-CN">Zhen Zhou</a><sup>2</sup>,&nbsp;
+					<a href="https://scholar.google.com.hk/citations?user=AnyChZAAAAAJ&hl=nl">Zhiqi Li</a><sup>2</sup>,&nbsp;
+					<a href="https://openreview.net/profile?id=~Jiaao_Yu1">Jiaao Yu</a><sup>2</sup>,&nbsp;
+					Yiling Zhu<sup>2</sup>,&nbsp;Jing Xu<sup>2</sup>,&nbsp;Biwen Lei<sup>2</sup>,&nbsp;Zhuo Chen<sup>2</sup>,&nbsp;Chunchao Guo<sup>2</sup>
+				</p>
+				<p class="affiliation">
+					<sup>1</sup>HKUST &nbsp;&nbsp; <sup>2</sup>Tencent Hunyuan
+				</p>
 
-				<!-- Main -->
-					<div id="main">
+				<div class="badge-row">
+					<a href="https://arxiv.org/abs/2509.21420" class="badge-btn arxiv">
+						📄 arXiv
+					</a>
+					<a href="private/quadgpt/QuadGPT_slides.pdf" class="badge-btn pdf">
+						📊 Slides
+					</a>
+					<a href="private/quadgpt/QuadGPT_ICLR_Poster_large.png" class="badge-btn poster">
+						🖼 Poster
+					</a>
+					<a href="https://3d.hunyuan.tencent.com/studio" class="badge-btn studio">
+						🚀 Hunyuan3D Studio
+					</a>
+					<a href="https://3d.hunyuan.tencent.com/" class="badge-btn hunyuan">
+						🌐 Hunyuan 3D
+					</a>
+				</div>
 
-						<!-- Featured Post -->
-							<article class="post featured">
-								<header class="major">
-									<span class="date"><b>ABSTRACT</b></span>
-								</header>
-								<p>
-The generation of quadrilateral-dominant meshes is a cornerstone of professional 3D content creation. 
-However, existing generative models generate quad meshes by first generating triangle meshes and then merging triangles into quadrilaterals with some specific rules, which typically produces quad meshes with poor topology.
-In this paper, we introduce QuadGPT, the first autoregressive framework for generating quadrilateral meshes in an end-to-end manner. 
-QuadGPT formulates this as a sequence prediction paradigm, distinguished by two key innovations: a unified tokenization method to handle mixed topologies of triangles and quadrilaterals, and a specialized Reinforcement Learning fine-tuning method tDPO for better generation quality. 
-Extensive experiments demonstrate that QuadGPT significantly surpasses previous triangle-to-quad conversion pipelines in both geometric accuracy and topological quality. 
-Our work establishes a new benchmark for native quad-mesh generation and showcases the power of combining large-scale autoregressive models with topology-aware RL refinement for creating structured 3D assets.								</p>
-								<a class="image main"><img src="images/teaser.jpg " alt="" /></a>
-							</article>
-							<article class="post featured">
-								<header class="major">
-									<span class="date"><b>METHOD</b></span>
-								</header>
-								<a class="image main" style="display: flex; justify-content: center;"><img src="images/method.jpg" alt="" style="width: 100%;" /></a>
-								<p>
-									Our approach, QuadGPT, introduces the first autoregressive framework for the direct generation of native quadrilateral and mixed-element meshes. The methodology consists of three core pillars:   (1) a unified serialization scheme to represent mixed-topology meshes as a single token sequence; (2) a powerful autoregressive architecture for generative pre-training; and (3) tDPO stage with a novel topological reward for direct topological optimization.
-								</p>
-								<header class="major">
-									<video src="images/demo.webm" controls autoplay loop style="width: 100%;"></video>
-								</header>
-							</article>		
-							
-							<article class="post featured">
-								<header class="major">
-									<span class="date"><b>RESULTS</b></span>
-								</header>
-								ToDO
-							</article>
-						
-							<article class="post featured">
-								<header class="major">
-									<span class="date"><b>CITATION</b></span>
-								</header>
-								<p>If you find our work useful in your research, please consider citing us:</p>
-								<pre>
-								<code class="code-block">
-@misc{liu2025quadgptnativequadrilateralmesh,
-      title={QuadGPT: Native Quadrilateral Mesh Generation with Autoregressive Models}, 
-      author={Jian Liu and Chunshi Wang and Song Guo and Haohan Weng and Zhen Zhou and Zhiqi Li and Jiaao Yu and Yiling Zhu and Jing Xu and Biwen Lei and Zhuo Chen and Chunchao Guo},
-      year={2025},
-      eprint={2509.21420},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2509.21420}, 
-}
-								</code>
-								</pre>
-							</article>
-					</div>
-
-				<!-- Copyright -->
-					<div id="copyright">
-						<ul><li>&copy; Jian Liu</li><li>2025-09-29</li></ul>
-					</div>
+				<ul class="actions">
+					<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
+				</ul>
 			</div>
 
+			<!-- Header -->
+			<header id="header">
+				<a href="index.html" class="logo">QuadGPT</a>
+			</header>
+
+			<!-- Nav -->
+			<nav id="nav">
+				<ul class="links">
+					<li><a href="#abstract">Abstract</a></li>
+					<li><a href="#method">Method</a></li>
+					<li><a href="#results">Results</a></li>
+					<li><a href="#citation">Citation</a></li>
+				</ul>
+			</nav>
+
+			<!-- Main -->
+			<div id="main">
+
+				<!-- ===== ABSTRACT ===== -->
+				<article class="post featured" id="abstract">
+					<header class="major">
+						<span class="section-tag">Abstract</span>
+					</header>
+					<p>
+						The generation of quadrilateral-dominant meshes is a cornerstone of professional 3D content creation.
+						However, existing generative models generate quad meshes by first generating triangle meshes and then merging triangles into quadrilaterals with specific rules, which typically produces quad meshes with <strong>poor topology</strong>.
+						In this paper, we introduce <strong>QuadGPT</strong>, the first autoregressive framework for generating quadrilateral meshes in an <strong>end-to-end</strong> manner.
+						QuadGPT formulates this as a sequence prediction paradigm, distinguished by two key innovations: a <em>unified tokenization method</em> to handle mixed topologies of triangles and quadrilaterals, and a specialized <em>Reinforcement Learning fine-tuning method tDPO</em> for better generation quality.
+						Extensive experiments demonstrate that QuadGPT significantly surpasses previous triangle-to-quad conversion pipelines in both geometric accuracy and topological quality.
+						Our work establishes a new benchmark for native quad-mesh generation and showcases the power of combining large-scale autoregressive models with topology-aware RL refinement for creating structured 3D assets.
+					</p>
+
+					<!-- Teaser 图 -->
+					<a class="image main">
+						<img src="images/teaser.jpg" alt="QuadGPT Teaser" style="border-radius:8px;" />
+					</a>
+					<p class="img-caption">
+						QuadGPT generates native quadrilateral meshes with clean, artist-friendly edge flow directly from point clouds — no post-processing conversion needed.
+					</p>
+
+					<!-- 核心贡献 -->
+					<header class="major" style="margin-top:1.5em;">
+						<span class="section-tag">Key Contributions</span>
+					</header>
+					<ul class="contributions">
+						<li>🔷 <strong>First end-to-end autoregressive model</strong> that generates native quad-dominant meshes directly, without any post-processing conversion.</li>
+						<li>🔷 <strong>Unified sequence representation</strong> for mixed-element meshes with a padding-based serialization, enabling scalable processing of heterogeneous mesh topologies.</li>
+						<li>🔷 <strong>tDPO (Truncated Direct Preference Optimization)</strong> — a novel RL fine-tuning stage that optimizes global quadrilateral flow through a topology-aware reward encouraging structured edge loops.</li>
+						<li>🔷 <strong>State-of-the-art performance</strong> on both artist-designed and AI-generated dense meshes, with a user preference score <strong>2.6× higher</strong> than the strongest baseline.</li>
+					</ul>
+				</article>
+
+				<!-- ===== METHOD ===== -->
+				<article class="post featured" id="method">
+					<header class="major">
+						<span class="section-tag">Method</span>
+					</header>
+
+					<!-- Pipeline 图 -->
+					<a class="image main">
+						<img src="images/method.jpg" alt="QuadGPT Pipeline" style="width:100%; border-radius:8px;" />
+					</a>
+					<p class="img-caption">
+						<strong>Pipeline of QuadGPT.</strong> An autoregressive Hourglass Transformer is pre-trained to generate mesh sequences conditioned on an input point cloud. The model is then fine-tuned using Truncated Direct Preference Optimization (tDPO), where preference pairs are automatically constructed via a novel topological reward.
+					</p>
+
+					<!-- 三大支柱 -->
+					<div class="pillars">
+						<div class="pillar-card">
+							<div class="pillar-num">①</div>
+							<h4>Unified Serialization</h4>
+							<p>A fixed-length 12-token block representation handles both triangular and quadrilateral faces uniformly via a padding strategy, enabling scalable mixed-topology mesh generation.</p>
+						</div>
+						<div class="pillar-card">
+							<div class="pillar-num">②</div>
+							<h4>Hourglass Transformer</h4>
+							<p>A 1.1B parameter hierarchical architecture with shortening factors of 3× and 4× efficiently captures global context and local details for long mesh sequences (up to 36,864 tokens).</p>
+						</div>
+						<div class="pillar-card">
+							<div class="pillar-num">③</div>
+							<h4>tDPO Refinement</h4>
+							<p>Truncated DPO fine-tuning with a topological reward — rewarding long continuous edge loops (L<sub>avg</sub>) and penalizing generation fractures (R<sub>frac</sub>) — directly optimizes global topology quality.</p>
+						</div>
+					</div>
+
+					<!-- Demo 视频 -->
+					<header class="major" style="margin-top:1.5em;">
+						<span class="section-tag">Demo</span>
+					</header>
+					<div class="video-container">
+						<video src="images/demo.webm" controls autoplay loop muted playsinline></video>
+					</div>
+					<p class="img-caption">QuadGPT generates production-ready quad meshes with clean edge flow from diverse 3D inputs.</p>
+				</article>
+
+		<!-- ===== RESULTS ===== -->
+				<article class="post featured" id="results">
+					<header class="major">
+						<span class="section-tag">Results</span>
+					</header>
+
+					<!-- ===== Part 1: 核心问题 — 为什么需要 native quad generation ===== -->
+					<header class="major" style="margin-top:0.5em;">
+						<span class="section-tag">Why Native Quad Generation?</span>
+					</header>
+					<p>
+						Existing methods generate quad meshes through an indirect pipeline: first produce triangle meshes, then merge adjacent triangles into quadrilaterals via post-processing rules.
+						This two-stage approach has a fundamental limitation — <strong>the conversion step destroys the global topological structure</strong>.
+						Merged quads inherit the chaotic connectivity of the underlying triangulation, resulting in poor edge flow, irregular face shapes, and broken loop structures that are unusable in professional workflows.
+					</p>
+					<a class="image main">
+						<img src="images/tri2quad_limit.png" alt="Limitations of Triangle-to-Quad Conversion" style="border-radius:8px;" />
+					</a>
+					<p class="img-caption">
+						<strong>Limitations of the triangle-to-quad conversion pipeline.</strong> Converting triangle meshes to quads via post-processing produces irregular topology with broken edge loops and poor face quality, regardless of the quality of the input triangulation.
+					</p>
+
+					<!-- ===== Part 2: 定性对比 — 与 AR 基线 ===== -->
+					<header class="major" style="margin-top:2em;">
+						<span class="section-tag">Qualitative Comparison: vs. Autoregressive Baselines</span>
+					</header>
+					<p>
+						We compare QuadGPT against leading autoregressive mesh generators (MeshAnythingV2, BPT, DeepMesh, FastMesh) on both challenging AI-generated dense meshes and high-quality artist-designed meshes.
+						Since these baselines are designed for triangular output, we apply a robust triangle-to-quad conversion as post-processing for fair comparison.
+					</p>
+					<a class="image main">
+						<img src="images/ar1.png" alt="Qualitative comparison with AR baselines on dense meshes" style="border-radius:8px;" />
+					</a>
+					<p class="img-caption">
+						<strong>Comparison on AI-generated dense meshes.</strong> The indirect pipeline of converting triangular meshes from autoregressive baselines often produces meshes with significant topological artifacts, missing geometric details, or overly simplified structures. QuadGPT consistently generates meshes that are significantly more coherent and artistically plausible.
+					</p>
+					<a class="image main" style="margin-top:1.5em;">
+						<img src="images/ar2.png" alt="Qualitative comparison with AR baselines on artist meshes" style="border-radius:8px;" />
+					</a>
+					<p class="img-caption">
+						<strong>Comparison on artist-designed meshes.</strong> QuadGPT demonstrates strong robustness on challenging AI-generated assets and achieves near-perfect topological reconstruction on artist-designed meshes, producing the clean edge flow characteristic of professional work.
+					</p>
+
+					<!-- ===== Part 3: 定性对比 — 与 QuadriFlow ===== -->
+					<header class="major" style="margin-top:2em;">
+						<span class="section-tag">Qualitative Comparison: vs. Field-Guided Method</span>
+					</header>
+					<p>
+						We also compare against QuadriFlow, a well-established field-guided quad-meshing method.
+						While field-guided approaches can produce pure quad meshes in ideal conditions, they exhibit <strong>significant instability on meshes with complex topology or sharp features</strong>, often resulting in severe geometric degradation or catastrophic failures.
+					</p>
+					<a class="image main">
+						<img src="images/flow1.png" alt="Qualitative comparison with QuadriFlow" style="border-radius:8px;" />
+					</a>
+					<p class="img-caption">
+						<strong>QuadGPT vs. QuadriFlow.</strong> Field-guided methods like QuadriFlow can be unstable on meshes with complex topology or sharp features. QuadGPT demonstrates exceptional robustness, faithfully reconstructing geometry while maintaining high-quality, structured topology in all examples.
+					</p>
+
+					<!-- ===== Part 4: 定量验证 ===== -->
+					<header class="major" style="margin-top:2em;">
+						<span class="section-tag">Quantitative Comparison</span>
+					</header>
+					<p>
+						The quantitative results confirm the visual observations. We evaluate geometric fidelity using Chamfer Distance (CD) and Hausdorff Distance (HD), topological quality via Quad Ratio (QR), and perceptual quality through a comprehensive user study (US) where domain experts ranked all six methods from best (5) to worst (0).
+					</p>
+					<div style="overflow-x:auto;">
+						<table class="results-table">
+							<thead>
+								<tr>
+									<th rowspan="2" style="text-align:left;">Method</th>
+									<th colspan="4">Dense Meshes (AI-generated)</th>
+									<th colspan="4">Artist Meshes</th>
+								</tr>
+								<tr>
+									<th>CD ↓</th><th>HD ↓</th><th>QR ↑</th><th>US ↑</th>
+									<th>CD ↓</th><th>HD ↓</th><th>QR ↑</th><th>US ↑</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td style="text-align:left;">QuadriFlow*</td>
+									<td class="best">0.045</td><td class="best">0.099</td><td class="best">100%</td><td>1.6</td>
+									<td>0.281</td><td>0.531</td><td class="best">100%</td><td>0.3</td>
+								</tr>
+								<tr>
+									<td style="text-align:left;">MeshAnythingV2</td>
+									<td>0.153</td><td>0.394</td><td>53%</td><td>1.4</td>
+									<td>0.096</td><td>0.251</td><td>60%</td><td>2.1</td>
+								</tr>
+								<tr>
+									<td style="text-align:left;">BPT</td>
+									<td>0.115</td><td>0.283</td><td>43%</td><td>2.7</td>
+									<td>0.051</td><td>0.125</td><td>49%</td><td>3.1</td>
+								</tr>
+								<tr>
+									<td style="text-align:left;">DeepMesh</td>
+									<td>0.246</td><td>0.435</td><td>64%</td><td>3.3</td>
+									<td>0.236</td><td>0.417</td><td>66%</td><td>2.8</td>
+								</tr>
+								<tr>
+									<td style="text-align:left;">FastMesh</td>
+									<td>0.105</td><td>0.257</td><td>3%</td><td>1.1</td>
+									<td>0.052</td><td>0.141</td><td>17%</td><td>1.9</td>
+								</tr>
+								<tr class="ours">
+									<td style="text-align:left;">⭐ QuadGPT (Ours)</td>
+									<td>0.057</td><td>0.147</td><td>80%</td><td class="best">4.9</td>
+									<td class="best">0.043</td><td class="best">0.095</td><td>78%</td><td class="best">4.8</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<p class="img-caption">* QuadriFlow results are computed only on the subset of inputs for which it successfully generated a mesh; its user study score incorporates a score of 0 for all failure cases.</p>
+					<p style="margin-top:1em;">
+						QuadGPT achieves the <strong>highest user preference scores</strong> by a decisive margin on both domains (4.9 and 4.8 out of 5), confirming that its advantages in producing production-ready assets are not only quantitatively measurable but also perceptually significant.
+						On artist meshes, QuadGPT achieves the best geometric fidelity (CD 0.043, HD 0.095) while maintaining a high quad ratio of 78%.
+						QuadriFlow, despite achieving 100% QR and the lowest CD/HD on dense meshes, suffers from severe instability — its user study scores (1.6 and 0.3) reflect frequent catastrophic failures on complex inputs.
+					</p>
+
+					<!-- ===== Part 5: 消融 — tDPO 的效果 ===== -->
+					<header class="major" style="margin-top:2em;">
+						<span class="section-tag">How tDPO Improves Quality</span>
+					</header>
+					<p>
+						A key innovation of QuadGPT is <strong>tDPO-Pro</strong> (Truncated Direct Preference Optimization), our topology-aware RL fine-tuning strategy.
+						We ablate its components to understand each contribution: training from scratch, fine-tuning from a triangle-pretrained model, standard DPO, truncated DPO (tDPO), and our full tDPO-Pro with the complete topological reward.
+					</p>
+					<div class="ablation-tables">
+						<div style="max-width:500px;">
+							<h4>Training Strategy Ablation</h4>
+							<table class="results-table">
+								<thead>
+									<tr><th style="text-align:left;">Method</th><th>CD ↓</th><th>HD ↓</th><th>QR ↑</th><th>US ↑</th></tr>
+								</thead>
+								<tbody>
+									<tr><td style="text-align:left;">From Scratch</td><td>0.081</td><td>0.203</td><td>75%</td><td>0.6</td></tr>
+									<tr><td style="text-align:left;">Finetune</td><td>0.065</td><td>0.167</td><td>72%</td><td>1.3</td></tr>
+									<tr><td style="text-align:left;">DPO</td><td>0.073</td><td>0.188</td><td>74%</td><td>1.1</td></tr>
+									<tr><td style="text-align:left;">tDPO</td><td>0.061</td><td>0.156</td><td>78%</td><td>3.3</td></tr>
+									<tr class="ours"><td style="text-align:left;">⭐ tDPO-Pro</td><td class="best">0.057</td><td class="best">0.147</td><td class="best">80%</td><td class="best">3.7</td></tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<p style="margin-top:1em;">
+						The results reveal a clear progression. <strong>Curriculum pre-training</strong> is essential — training from scratch on quad meshes struggles to converge (CD 0.081, US 0.6), because predicting a quadrilateral face is topologically equivalent to predicting two correlated triangles simultaneously. Initializing from a converged triangle model ("Finetune") provides a much stronger foundation (CD 0.065).
+					</p>
+					<p>
+						Standard DPO, which fine-tunes on full low-face-count meshes, actually <em>hurts</em> generalization to complex meshes (CD rises to 0.073). The breakthrough comes from <strong>truncated training</strong>: tDPO, which trains on truncated high-resolution sequences with a fracture penalty, dramatically boosts user preference (US jumps from 1.1 to 3.3). Our full tDPO-Pro — adding the complete topological reward that encourages long continuous edge loops — achieves the best results across all metrics.
+					</p>
+					<a class="image main" style="margin-top:1em;">
+						<img src="images/dpo.png" alt="Effectiveness of tDPO-Pro" style="border-radius:8px;" />
+					</a>
+					<p class="img-caption">
+						<strong>Visual effect of tDPO-Pro.</strong> Our comprehensive training strategy significantly enhances both the geometric quality and structural integrity of the generated quad-meshes. Notice how edge loops become progressively cleaner and more structured from left to right.
+					</p>
+
+					<!-- ===== Part 6: 消融 — Native vs. Conversion ===== -->
+					<header class="major" style="margin-top:2em;">
+						<span class="section-tag">Native Generation vs. Conversion Pipeline</span>
+					</header>
+					<p>
+						To rigorously isolate the benefit of native quad generation, we introduce a strong controlled baseline: <strong>TriGPT</strong> — a model sharing the <em>identical architecture, 1.3M training dataset, and tDPO strategy</em> as QuadGPT, but generating triangles that are then converted to quads via post-processing. This setup controls for all confounding variables, testing only the efficacy of end-to-end native generation versus the generation-then-conversion paradigm.
+					</p>
+					<div class="ablation-tables">
+						<div style="max-width:500px;">
+							<h4>Native vs. Conversion Pipeline</h4>
+							<table class="results-table">
+								<thead>
+									<tr><th style="text-align:left;">Method</th><th>CD ↓</th><th>HD ↓</th><th>QR ↑</th><th>US ↑</th></tr>
+								</thead>
+								<tbody>
+									<tr><td style="text-align:left;">TriGPT (Q)</td><td>0.062</td><td>0.160</td><td>70%</td><td>0.2</td></tr>
+									<tr><td style="text-align:left;">TriGPT+RL (Q)</td><td class="best">0.051</td><td class="best">0.138</td><td>72%</td><td>0.5</td></tr>
+									<tr class="ours"><td style="text-align:left;">⭐ QuadGPT (Ours)</td><td>0.057</td><td>0.147</td><td class="best">80%</td><td class="best">1.3</td></tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<p style="margin-top:1em;">
+						The results confirm our core hypothesis. While the highly optimized TriGPT+RL achieves slightly better geometric scores (CD 0.051 vs. 0.057), it <strong>cannot match the topological quality</strong> of our native approach — QuadGPT achieves a substantially higher Quad Ratio (80% vs. 72%) and, crucially, a <strong>user preference score 2.6× higher</strong> (1.3 vs. 0.5). This decisive gap in perceptual quality reveals a fundamental limitation: post-hoc conversion inherently destroys global topological coherence, regardless of how good the underlying triangle mesh is.
+					</p>
+					<a class="image main" style="margin-top:1em;">
+						<img src="images/trigpt_quadgpt.png" alt="Native Generation vs. Conversion Pipeline" style="border-radius:8px;" />
+					</a>
+					<p class="img-caption">
+						<strong>Native QuadGPT vs. TriGPT + Conversion.</strong> (Q) denotes the use of a triangle-to-quad conversion step. Although TriGPT employs the same RL fine-tuning to mitigate fractures, its topological quality is inherently constrained by the post-processing conversion, yielding significantly inferior edge flow compared to our native QuadGPT.
+					</p>
+				</article>
+
+				<!-- ===== CITATION ===== -->
+				<article class="post featured" id="citation">
+					<header class="major">
+						<span class="section-tag">Citation</span>
+					</header>
+					<p>If you find our work useful in your research, please consider citing:</p>
+					<div class="bibtex-block">@inproceedings{liu2026quadgpt,
+  title     = {Quad{GPT}: Native Quadrilateral Mesh Generation with Autoregressive Models},
+  author    = {Jian Liu and Chunshi Wang and Song Guo and Haohan Weng and
+               Zhen Zhou and Zhiqi Li and Jiaao Yu and Yiling Zhu and
+               Jing Xu and Biwen Lei and Zhuo Chen and Chunchao Guo},
+  booktitle = {The Fourteenth International Conference on Learning Representations},
+  year      = {2026},
+  url       = {https://openreview.net/forum?id=oRmo4p1KEE},
+}</div>
+				</article>
+
+			</div><!-- end #main -->
+
+			<!-- Copyright -->
+			<div id="copyright">
+				<ul>
+					<li>&copy; Jian Liu</li>
+					<li>2025</li>
+					<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+				</ul>
+			</div>
+
+		</div><!-- end #wrapper -->
+
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+
+		<!-- 平滑滚动到锚点 -->
+		<script>
+		document.querySelectorAll('#nav a[href^="#"]').forEach(anchor => {
+			anchor.addEventListener('click', function(e) {
+				e.preventDefault();
+				const target = document.querySelector(this.getAttribute('href'));
+				if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			});
+		});
+		</script>
 
 	</body>
 </html>
